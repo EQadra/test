@@ -8,9 +8,9 @@
     "forceConsistentCasingInFileNames": true,
     "outDir": "./dist",
     "typeRoots": [
-      "./node_modules/@types",
-      "./src/@types"  // Add this line if you created the custom types here
-    ],
+        "./node_modules/@types",
+        "./src/@types"
+      ]  // Sin la coma aquí
   },
   "include": [
     "**/*.ts",
