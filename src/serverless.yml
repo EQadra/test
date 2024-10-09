@@ -9,16 +9,23 @@ provider:
     DB_USER: ${env:DB_USER}
     DB_PASS: ${env:DB_PASS}
     DB_NAME: ${env:DB_NAME}
+  vpc:
+    securityGroupIds:
+      - sg-XXXXXXXXX  # Reemplaza con el ID de tu Security Group
+    subnetIds:
+      - subnet-XXXXXXXXX  # Reemplaza con los IDs de tus Subnets
 
 functions:
+ 
   getItem:
-    handler: src/index.handler
+    handler: index.getItem 
     events:
       - http:
           path: items
           method: get
+
   createItem:
-    handler: src/index.handler
+    handler: index.createItem  
     events:
       - http:
           path: items
@@ -28,3 +35,25 @@ resources:
   Resources:
     ItemsTable:
       Type: AWS::RDS::DBInstance
+      Properties:
+        DBInstanceIdentifier: items-database
+        AllocatedStorage: 20
+        DBInstanceClass: db.t2.micro
+        Engine: mysql
+        EngineVersion: '8.0'
+        MasterUsername: ${env:DB_USER}
+        MasterUserPassword: ${env:DB_PASS}
+        DBName: ${env:DB_NAME}
+        VPCSecurityGroups:
+          - sg-XXXXXXXXX  # Reemplaza con el ID de tu Security Group
+        DBSubnetGroupName: !Ref MyDBSubnetGroup
+
+    MyDBSubnetGroup:
+      Type: AWS::RDS::DBSubnetGroup
+      Properties:
+        DBSubnetGroupDescription: "My DB subnet group"
+        SubnetIds:
+          - subnet-XXXXXXXXX  # Reemplaza con los IDs de tus Subnets
+
+plugins:
+  - serverless-offline

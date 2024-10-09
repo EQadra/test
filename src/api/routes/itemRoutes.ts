@@ -2,7 +2,7 @@ import { getItemHandler, createItemHandler } from '../controllers/itemController
 
 export const routes = {
   get: {
-    handler: getItemHandler,
+    handler: getItemHandler, // Esto debería apuntar al handler
     events: [
       {
         http: {
@@ -13,7 +13,7 @@ export const routes = {
     ],
   },
   post: {
-    handler: createItemHandler,
+    handler: createItemHandler, // Esto debería apuntar al handler
     events: [
       {
         http: {

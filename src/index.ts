@@ -8,7 +8,6 @@ const init = async () => {
 
 init();
 
-export const handler = {
-  ...routes.get,
-  ...routes.post,
-};
+// Exporta las funciones para los endpoints
+export const getItem = routes.get.handler; // Cambia esto para usar handler
+export const createItem = routes.post.handler; // Cambia esto para usar handler

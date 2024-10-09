@@ -1,0 +1,31 @@
+service: test-api
+
+
+provider:
+  name: aws
+  runtime: nodejs16.x
+  region: us-east-1
+  environment:
+    DB_HOST: ${env:DB_HOST}
+    DB_USER: ${env:DB_USER}
+    DB_PASS: ${env:DB_PASS}
+    DB_NAME: ${env:DB_NAME}
+
+functions:
+  getItem:
+    handler: src/index.handler
+    events:
+      - http:
+          path: items
+          method: get
+  createItem:
+    handler: src/index.handler
+    events:
+      - http:
+          path: items
+          method: post
+
+resources:
+  Resources:
+    ItemsTable:
+      Type: AWS::RDS::DBInstance
